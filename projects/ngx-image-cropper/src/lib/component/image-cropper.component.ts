@@ -99,6 +99,8 @@ export class ImageCropperComponent implements OnChanges, OnInit {
   @Output() cropperReady = new EventEmitter<Dimensions>();
   @Output() loadImageFailed = new EventEmitter<void>();
   @Output() transformChange = new EventEmitter<ImageTransform>();
+  @Output() loadingStarted = new EventEmitter<boolean>();
+  @Output() loadingFinished = new EventEmitter<boolean>();
 
 
   constructor(
@@ -245,10 +247,17 @@ export class ImageCropperComponent implements OnChanges, OnInit {
   }
 
   private loadImageFromURL(url: string): void {
+		this.loadingStarted.emit(true);
     this.loadImageService
       .loadImageFromURL(url, this.settings)
-      .then((res) => this.setLoadedImage(res))
-      .catch((err) => this.loadImageError(err));
+      .then((res) => {
+				this.setLoadedImage(res);
+				this.loadingFinished.emit(true);
+			})
+      .catch((err) => {
+				this.loadImageError(err);
+				this.loadingFinished.emit(true);
+			});
   }
 
   private setLoadedImage(loadedImage: LoadedImage): void {
@@ -284,6 +293,7 @@ export class ImageCropperComponent implements OnChanges, OnInit {
       this.setImageMaxSizeRetries++;
       setTimeout(() => this.checkImageMaxSizeRecursively(), 50);
     }
+		this.loadingFinished.emit(true)
   }
 
   private sourceImageLoaded(): boolean {
