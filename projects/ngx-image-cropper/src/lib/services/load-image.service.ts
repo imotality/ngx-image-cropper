@@ -37,22 +37,45 @@ export class LoadImageService {
     return /image\/(png|jpg|jpeg|bmp|gif|tiff|webp|x-icon|vnd.microsoft.icon)/.test(type);
   }
 
-  loadImageFromURL(url: string, cropperSettings: CropperSettings): Promise<LoadedImage> {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onerror = () => reject;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        context?.drawImage(img, 0, 0);
-        this.loadBase64Image(canvas.toDataURL(), cropperSettings).then(resolve);
-      };
-      img.crossOrigin = 'anonymous';
-      img.src = url;
-    });
-  }
+  // loadImageFromURL(url: string, cropperSettings: CropperSettings): Promise<LoadedImage> {
+  //   return new Promise((resolve, reject) => {
+  //     const img = new Image();
+  //     img.onerror = () => reject;
+  //     img.onload = () => {
+  //       const canvas = document.createElement('canvas');
+  //       const context = canvas.getContext('2d');
+  //       canvas.width = img.width;
+  //       canvas.height = img.height;
+  //       context?.drawImage(img, 0, 0);
+  //       this.loadBase64Image(canvas.toDataURL(), cropperSettings).then(resolve);
+  //     };
+  //     img.crossOrigin = 'anonymous';
+  //     img.src = url;
+  //   });
+  // }
+	loadImageFromURL(url: string, cropperSettings: CropperSettings): Promise<LoadedImage> {
+		return new Promise((resolve, reject) => {
+			const img = new Image();
+			img.onerror = () => reject;
+			img.onload = () => {
+				const canvas = document.createElement('canvas');
+				const context = canvas.getContext('2d');
+				canvas.width = img.width;
+				canvas.height = img.height;
+				context?.drawImage(img, 0, 0);
+				canvas.toBlob((blob) => {
+					if (blob) {
+						const url = URL.createObjectURL(blob);
+						this.loadBase64Image(url, cropperSettings).then(resolve);
+					} else {
+						reject(new Error('Failed to create Blob from canvas content'));
+					}
+				}, 'image/png');
+			};
+			img.crossOrigin = 'anonymous';
+			img.src = url;
+		});
+	}
 
   loadBase64Image(imageBase64: string, cropperSettings: CropperSettings): Promise<LoadedImage> {
     return new Promise<LoadImageBase64>((resolve, reject) => {

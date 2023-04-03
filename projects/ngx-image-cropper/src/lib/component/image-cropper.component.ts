@@ -246,9 +246,9 @@ export class ImageCropperComponent implements OnChanges, OnInit {
       .catch((err) => this.loadImageError(err));
   }
 
-  private loadImageFromURL(url: string): void {
+  private async loadImageFromURL(url: string): Promise<void> {
 		this.loadingStarted.emit(true);
-    this.loadImageService
+    await this.loadImageService
       .loadImageFromURL(url, this.settings)
       .then((res) => {
 				this.setLoadedImage(res);

@@ -25,6 +25,9 @@ export class AppComponent {
   allowMoveImage = false;
   hidden = false;
 
+	test(event: boolean): void {
+		console.log(event);
+	}
   fileChangeEvent(event: any): void {
     this.loading = true;
     this.imageChangedEvent = event;

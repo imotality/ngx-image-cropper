@@ -1,5 +1,31 @@
 <input type="file" (change)="fileChangeEvent($event)" />
 <br />
+<image-cropper
+[imageChangedEvent]="imageChangedEvent"
+[imageURL]="'http://127.0.0.1:10000/devstoreaccount1/local/users/1/avatar/2023-04-03T0640014808560Z_Sternwarte_Darmstadt_HDR_Panorama_10MB_-_Photographed_by_James_Breitenstein%20%281%29.jpg'"
+[maintainAspectRatio]="true"
+[containWithinAspectRatio]="containWithinAspectRatio"
+[aspectRatio]="aspectRatio"
+[resizeToWidth]="128"
+[cropperMinWidth]="128"
+[onlyScaleDown]="true"
+[roundCropper]="false"
+[canvasRotation]="canvasRotation"
+[(transform)]="transform"
+[alignImage]="'center'"
+[style.display]="showCropper ? null : 'none'"
+[allowMoveImage]="allowMoveImage"
+[hidden]="hidden"
+backgroundColor="red"
+format="png"
+(loadingStarted)="test($event)"
+(loadingFinished)="test($event)"
+(imageCropped)="imageCropped($event)"
+(imageLoaded)="imageLoaded()"
+(cropperReady)="cropperReady($event)"
+(loadImageFailed)="loadImageFailed()"
+[imageAltText]="'alternative image text'"
+></image-cropper>
 <br />
 <input [(ngModel)]="imageURL" placeholder="URL to load image" type="text" />
 <br />
