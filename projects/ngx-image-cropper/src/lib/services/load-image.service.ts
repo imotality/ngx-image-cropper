@@ -150,7 +150,12 @@ export class LoadImageService {
       -originalSize.width / 2,
       -originalSize.height / 2
     );
-    const transformedBase64 = canvas.toDataURL();
+		let transformedBase64 = '';
+			canvas.toBlob((blob) => {
+					if (blob) {
+						transformedBase64 = URL.createObjectURL(blob);
+					}
+				}, 'image/png');
     const transformedImage = await this.loadImageFromBase64(transformedBase64);
     return {
       original: {

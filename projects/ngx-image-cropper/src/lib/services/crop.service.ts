@@ -55,7 +55,12 @@ export class CropService {
         : Math.round(height * resizeRatio);
       resizeCanvas(cropCanvas, output.width, output.height);
     }
-    output.base64 = cropCanvas.toDataURL('image/' + settings.format, this.getQuality(settings));
+		cropCanvas.toBlob((blob) => {
+			if (blob) {
+				output.base64 = URL.createObjectURL(blob);
+			}
+		},`'image/' + ${settings.format}`, this.getQuality(settings));
+    // output.base64 = cropCanvas.toDataURL('image/' + settings.format, this.getQuality(settings));
     return output;
   }
 
