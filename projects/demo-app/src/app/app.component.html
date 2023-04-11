@@ -2,7 +2,7 @@
 <br />
 <image-cropper
 [imageChangedEvent]="imageChangedEvent"
-[imageURL]="'http://127.0.0.1:10000/devstoreaccount1/local/users/1/avatar/2023-04-03T0640014808560Z_Sternwarte_Darmstadt_HDR_Panorama_10MB_-_Photographed_by_James_Breitenstein%20%281%29.jpg'"
+[imageURL]="'https://www.tutorialspoint.com/assets/profiles/538106/profile/200_1039031-1666073315.jpg'"
 [maintainAspectRatio]="true"
 [containWithinAspectRatio]="containWithinAspectRatio"
 [aspectRatio]="aspectRatio"
@@ -18,8 +18,8 @@
 [hidden]="hidden"
 backgroundColor="red"
 format="png"
-(loadingStarted)="test($event)"
-(loadingFinished)="test($event)"
+(loadingStarted)="test()"
+(loadingFinished)="test()"
 (imageCropped)="imageCropped($event)"
 (imageLoaded)="imageLoaded()"
 (cropperReady)="cropperReady($event)"

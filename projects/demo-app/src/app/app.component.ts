@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
+import { Dimensions, ImageCroppedEvent, ImageTransform } from '../../../ngx-image-cropper/src';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +25,7 @@ export class AppComponent {
   allowMoveImage = false;
   hidden = false;
 
-	test(event: boolean): void {
-		console.log(event);
+	test(): void {
 	}
   fileChangeEvent(event: any): void {
     this.loading = true;
